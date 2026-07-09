@@ -1,0 +1,60 @@
+/* Premium Classic Typography & Editorial Cyber Theme Variables (Monochrome/Silver/White) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@400;600;700&display=swap');
+
+:root {
+  /* Color Palette - Premium Matte Black, Slate & Silver Chrome */
+  --bg-base: #030303;
+  --bg-surface: #0a0a0c;
+  --bg-surface-elevated: #101012;
+  --bg-glass: rgba(10, 10, 12, 0.7);
+  
+  --text-primary: #ffffff;
+  --text-secondary: #8e8e93;
+  --text-tertiary: #4e4e52;
+  --text-accent: #ffffff; /* White Glow */
+  
+  /* Monochrome Silver/White Accents */
+  --accent-cyan: #e5e5ea;
+  --accent-magenta: #ffffff;
+  --accent-purple: #aeaeb2;
+  --accent-blue: #f2f2f7;
+  --accent-amber: #c7c7cc;
+  
+  /* Glowing / Neon drop shadows (Soft silver/white halos) */
+  --glow-blue: 0 0 20px rgba(255, 255, 255, 0.12);
+  --glow-cyan: 0 0 15px rgba(255, 255, 255, 0.1);
+  --glow-magenta: 0 0 15px rgba(255, 255, 255, 0.15);
+  --glow-purple: 0 0 15px rgba(255, 255, 255, 0.08);
+  
+  /* Border styles - sharp, fine silver grids */
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-glass: rgba(255, 255, 255, 0.05);
+  --border-glow: rgba(255, 255, 255, 0.15);
+  
+  /* Typography Families */
+  --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif; /* High contrast modern sans */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-serif: 'Cinzel', 'Playfair Display', serif;
+  
+  /* Timing / Transitions */
+  --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.25s ease;
+  
+  /* Layout */
+  --max-width: 1400px;
+}
+
+/* Base custom styles to enforce high-end look */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface-elevated);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}

@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abhay Kushwaha | Innovation Lab</title>
+    <meta name="description" content="Welcome to the Innovation Lab of Abhay Kushwaha — Founder, AI Engineer, and Hardware Developer. Explore custom hardware, AI agents, robotics, and interactive hardware-software systems." />
+    <link rel="stylesheet" href="/src/styles/theme.css" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/components.css" />
+  </head>
+  <body>
+    <!-- Background Elements -->
+    <div id="background-canvas-container">
+      <canvas id="grid-circuit-canvas"></canvas>
+    </div>
+
+    <!-- Developer Mode Matrix Rain Overlay -->
+    <div id="dev-mode-overlay">
+      <canvas id="dev-mode-canvas"></canvas>
+      <div class="dev-hud-msg">
+        <div>> CONSOLE ACTIVATED: DEVELOPER MODE</div>
+        <div>> STATUS: ONLINE</div>
+        <div>> KEYSTROKE OVERRIDE DETECTED (KONAMI CODE)</div>
+        <div>> PRESS 'ESC' OR TYPE 'EXIT' TO DEACTIVATE</div>
+      </div>
+    </div>
+
+    <!-- Cinematic Landing Overlay -->
+    <div id="landing-overlay" role="presentation">
+      <div id="intro-line" class="intro-text">Everything starts with curiosity.</div>
+      <div id="intro-card" class="intro-name-card">
+        <h1>ABHAY KUSHWAHA</h1>
+        <p>Founder &bull; AI Engineer &bull; Product Builder</p>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar HUD (Hidden initially) -->
+    <nav id="hud-navbar" aria-label="Main Navigation">
+      <a href="#hero" class="hud-logo">ABHAY.LAB</a>
+      <div class="hud-links">
+        <a href="#timeline" class="hud-link">Timeline</a>
+        <a href="#projects" class="hud-link">Projects</a>
+        <a href="#skills" class="hud-link">Skills</a>
+        <a href="#motherboard" class="hud-link">Tech</a>
+        <a href="#achievements" class="hud-link">Awards</a>
+        <a href="#contact" class="hud-link">Contact</a>
+        <a href="#admin" class="hud-link" id="admin-trigger" style="color: var(--text-primary); border: 1px solid var(--border-light); padding: 0.1rem 0.5rem; border-radius: 99px; background: rgba(255,255,255,0.03);">Admin</a>
+      </div>
+    </nav>
+
+    <!-- Floating AI Assistant Widget -->
+    <button id="ai-assistant-toggle" aria-label="Open AI Assistant">
+      <span class="ai-pulse"></span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12a10 10 0 0 1 10-10z"></path><path d="M12 8v8"></path><path d="M8 12h8"></path></svg>
+    </button>
+    
+    <div id="ai-assistant-chat" aria-live="polite">
+      <div class="chat-header">
+        <span class="chat-title">LAB_ASSISTANT v1.2</span>
+        <button class="chat-close" id="ai-assistant-close" aria-label="Close Chat">&times;</button>
+      </div>
+      <div class="chat-messages" id="chat-messages-box">
+        <div class="chat-msg bot">Greeting. I am the Innovation Lab Assistant. Ask me anything about Abhay's hardware projects, coding experience, or Scrims Nation.</div>
+      </div>
+      <div class="chat-suggestions">
+        <button class="chat-suggest-btn" data-query="How did you build LightInMotion?">LightInMotion</button>
+        <button class="chat-suggest-btn" data-query="What is Scrims Nation?">Scrims Nation</button>
+        <button class="chat-suggest-btn" data-query="Tell me about the Robotic Hand.">Robotic Hand</button>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chat-input-field" placeholder="Ask assistant..." aria-label="Ask assistant input" />
+        <button class="chat-send-btn" id="chat-send-trigger">Send</button>
+      </div>
+    </div>
+
+    <!-- Main Dashboard Application Contents -->
+    <main id="dashboard">
+      
+      <!-- Hero Section -->
+      <section id="hero" aria-label="Introduction">
+        <div class="container">
+          <div class="hero-wrapper">
+            <div class="hero-info">
+              <span class="section-tag" data-tag="welcome">Lab Initialization</span>
+              <h1 class="hero-title" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1rem;">Abhay Kushwaha</h1>
+              <p class="hero-subtitle">Engineering the Future of AI & Robotics</p>
+              <p class="hero-bio">
+                I am a tech founder, full-stack engineer, and AI developer studying Computer Science. I construct mechatronics, design PCBs, program low-level microcontrollers, and orchestrate intelligent agent pipelines. Let's explore my innovation lab.
+              </p>
+              <div style="margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="#projects" class="btn btn-primary">Enter Lab Rooms</a>
+                <a href="#contact" class="btn btn-secondary">Direct Comms</a>
+              </div>
+            </div>
+            <div class="hologram-container">
+              <div class="hologram-ring ring-outer"></div>
+              <div class="hologram-ring ring-inner"></div>
+              <div class="hologram-card" id="hologram-card-element">
+                <div class="hologram-inner">
+                  <div class="hologram-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                  </div>
+                  <h2 class="hologram-name">ABHAY K.</h2>
+                  <p class="hologram-title">AI & IoT Dev</p>
+                  <div style="margin-top: 1.5rem; font-family: monospace; font-size: 0.6rem; color: var(--text-tertiary);">
+                    COORDINATES: CHANDIGARH, IN<br>
+                    PORT: 8080 // DEV_ONLINE
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Timeline Section -->
+      <section id="timeline" aria-label="Journey Timeline">
+        <div class="container">
+          <span class="section-tag">Milestones</span>
+          <h2 class="section-title">Timeline of Innovations</h2>
+          
+          <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-node" data-year="Aug 2025" data-index="0">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">Aug 2025</div>
+              <div class="timeline-summary">Smart Home Automation (1st Year College Entry)</div>
+            </div>
+
+            <div class="timeline-node" data-year="Jan 2026" data-index="1">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">Jan 2026</div>
+              <div class="timeline-summary">Built Kinetic Robotic Hand & Telemetry</div>
+            </div>
+
+            <div class="timeline-node" data-year="Jul 2026" data-index="2">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">Jul 2026</div>
+              <div class="timeline-summary">AI Surveillance Drone & LightInMotion (Present)</div>
+            </div>
+
+            <div class="timeline-node" data-year="Nov 2026" data-index="3">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">Nov 2026</div>
+              <div class="timeline-summary">Cross-Platform App Sync (Future projection)</div>
+            </div>
+
+            <div class="timeline-node" data-year="2027-2028" data-index="4">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2027-2028</div>
+              <div class="timeline-summary">Co-Founded Scrims Nation Platform (Future projection)</div>
+            </div>
+
+            <div class="timeline-node" data-year="Future" data-index="5">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">Future</div>
+              <div class="timeline-summary">B.Tech CSE Graduation & Edge AI Robotics</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Fullscreen Timeline Overlays -->
+      <div id="timeline-overlays-container">
+        <!-- JS will populate modals -->
+      </div>
+
+      <!-- Immersive Project Rooms Showcase -->
+      <section id="projects" aria-label="Featured Projects">
+        <div class="container">
+          <span class="section-tag">Lab Rooms</span>
+          <h2 class="section-title" style="margin-bottom: 6rem;">Core Projects Showcase</h2>
+          
+          <div class="project-list">
+            
+            <!-- Project 1: LightInMotion -->
+            <article class="project-showcase" id="proj-lightinmotion">
+              <div class="project-details">
+                <h3 class="project-title">LightInMotion</h3>
+                <span class="project-role">E-Commerce Brand & Hardware Sync</span>
+                <p class="project-desc">
+                  An ambient lighting brand and sync ecosystem providing smart LED modules. I designed and manufactured customized hardware (ESP32 & ESP8266 controller architectures) running WLED, Hyperion, and custom firmware synchronized with a multi-platform app ecosystem (desktop, mobile, TV) for real-time video, music, and gaming peripheral sync.
+                </p>
+                <div class="project-meta-grid">
+                  <div>
+                    <div class="meta-item-label">Ecosystem</div>
+                    <div class="meta-item-val">Shopify, Desktop (Electron), Android, TV App</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Hardware Controller</div>
+                    <div class="meta-item-val">ESP32, ESP8266, custom PCB blueprints</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Protocols</div>
+                    <div class="meta-item-val">WLED, SignalRGB, Hyperion, UDP Real-Time Sync</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Status</div>
+                    <div class="meta-item-val">Active Commercial Brand</div>
+                  </div>
+                </div>
+                <div class="project-links">
+                  <button class="btn btn-primary" onclick="alert('Shopify store simulation: item is synced!')">Visit Shopify Store</button>
+                  <button class="btn btn-secondary" onclick="alert('Downloading updater bundle: version v2.0.4')">Get Desktop App</button>
+                </div>
+              </div>
+              
+              <!-- Premium Image & Video Slider Capsule -->
+              <div class="project-slideshow-container" data-project-index="0">
+                <div class="slides-wrapper">
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <svg viewBox="0 0 100 60" width="100%" height="100%" style="opacity: 0.15;">
+                        <rect width="100" height="60" fill="none" stroke="#fff" stroke-width="0.2"/>
+                        <path d="M10 10 L90 50 M10 50 L90 10" stroke="#fff" stroke-width="0.1"/>
+                      </svg>
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ VIDEO PRESENTATION ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">CLICK TO PLAY PRODUCT RUNTHROUGH</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">LightInMotion Product Showcase Reel</div>
+                  </div>
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <svg viewBox="0 0 100 60" width="100%" height="100%" style="opacity: 0.15;">
+                        <circle cx="50" cy="30" r="15" fill="none" stroke="#fff" stroke-width="0.2"/>
+                        <path d="M10 30 H90 M50 10 V50" stroke="#fff" stroke-width="0.1"/>
+                      </svg>
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ ESP32 CONTROLLER DESIGN ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">ESP32 DEPLOYMENT DIAGRAM BLUEPRINTS</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">ESP32 Hardware Schematic Blueprints</div>
+                  </div>
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ SHOPIFY STORE ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">DIGITAL STOREFRONT INTERFACES</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">Shopify E-Commerce Storefront Screenshot</div>
+                  </div>
+                </div>
+                <button class="slide-nav-btn slide-nav-prev" aria-label="Previous Slide">&larr;</button>
+                <button class="slide-nav-btn slide-nav-next" aria-label="Next Slide">&rarr;</button>
+                <div class="slide-dots-indicator"></div>
+              </div>
+            </article>
+
+            <!-- Project 2: Scrims Nation -->
+            <article class="project-showcase" id="proj-scrimsnation">
+              <div class="project-details">
+                <h3 class="project-title">Scrims Nation</h3>
+                <span class="project-role">Esports Tournament Platform</span>
+                <p class="project-desc">
+                  An esports tournament matchmaking and growth platform designed to streamline game tournaments. It structures player matchings, brackets, automatic stats tracking, and prize distributions. The system matches players based on skill rating metrics, optimizing tournament schedules automatically.
+                </p>
+                <div class="project-meta-grid">
+                  <div>
+                    <div class="meta-item-label">Focus</div>
+                    <div class="meta-item-val">Tournament Flow & Player Matching</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Tech Stack</div>
+                    <div class="meta-item-val">React, Node.js, Firebase, Real-time APIs</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Growth Roadmap</div>
+                    <div class="meta-item-val">Targeting collegiate & community leagues</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Statistics</div>
+                    <div class="meta-item-val">99% Tournament Automation</div>
+                  </div>
+                </div>
+                <div class="project-links">
+                  <button class="btn btn-primary" onclick="alert('Redirecting to Scrims Nation web app portal...')">Enter Web Portal</button>
+                </div>
+              </div>
+              
+              <!-- Premium Image & Video Slider Capsule -->
+              <div class="project-slideshow-container" data-project-index="1">
+                <div class="slides-wrapper">
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ MATCHMAKING DASHBOARD ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">REAL-TIME MATCH BRACKETS FLOW</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">Tournament Match Bracket Interfaces</div>
+                  </div>
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ STATS RUNNING RECORDER ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">AUTOMATED ESPORTS PLAYER STATS TRACKING</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">Automated Player Statistics API Dashboard</div>
+                  </div>
+                </div>
+                <button class="slide-nav-btn slide-nav-prev" aria-label="Previous Slide">&larr;</button>
+                <button class="slide-nav-btn slide-nav-next" aria-label="Next Slide">&rarr;</button>
+                <div class="slide-dots-indicator"></div>
+              </div>
+            </article>
+
+            <!-- Project 3: AI Surveillance Drone -->
+            <article class="project-showcase" id="proj-drone">
+              <div class="project-details">
+                <h3 class="project-title">AI Surveillance Drone</h3>
+                <span class="project-role">Autonomous Flight & Onboard Sensors</span>
+                <p class="project-desc">
+                  An autonomous flight drone equipped with onboard sensors, PID control loops, and live camera streaming. Programmed with C++ on an ESP32 micro-controller board, capturing telemetry from an MPU6050 accelerometer/gyroscope and a BMP280 pressure sensor. It maps real-time data to adjust motor outputs via a PID controller.
+                </p>
+                <div class="project-meta-grid">
+                  <div>
+                    <div class="meta-item-label">Micro-Core</div>
+                    <div class="meta-item-val">ESP32 with custom power-grid circuit</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Sensors</div>
+                    <div class="meta-item-val">MPU6050 Gyro, BMP280 Altitude</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Control Logic</div>
+                    <div class="meta-item-val">PID Loop (Proportional-Integral-Derivative)</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Transmissions</div>
+                    <div class="meta-item-val">WiFi Live Camera Stream & Telemetry UDP</div>
+                  </div>
+                </div>
+                <div class="project-links">
+                  <button class="btn btn-primary" onclick="alert('Connecting to simulated drone node: ESP32-DRONE-01. Local IP: 192.168.4.1')">Live System Check</button>
+                </div>
+              </div>
+              
+              <!-- Premium Image & Video Slider Capsule -->
+              <div class="project-slideshow-container" data-project-index="2">
+                <div class="slides-wrapper">
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ FLIGHT TELEMETRY REEL ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">WATCH DRONE ONBOARD CAMERA RECORDINGS</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">Onboard Camera Stream & Obstacle Tracking Demo</div>
+                  </div>
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ HARDWARE SCHEMATIC ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">ESP32, MPU6050 AND MOTORS GRID</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">ESP32 & MPU6050 Actuator Wiring Layout</div>
+                  </div>
+                </div>
+                <button class="slide-nav-btn slide-nav-prev" aria-label="Previous Slide">&larr;</button>
+                <button class="slide-nav-btn slide-nav-next" aria-label="Next Slide">&rarr;</button>
+                <div class="slide-dots-indicator"></div>
+              </div>
+            </article>
+
+            <!-- Project 4: Robotic Hand -->
+            <article class="project-showcase" id="proj-robothand">
+              <div class="project-details">
+                <h3 class="project-title">Kinetic Robotic Hand</h3>
+                <span class="project-role">Mechatronics & Biometric Actuators</span>
+                <p class="project-desc">
+                  An anthropomorphic multi-degree-of-freedom robotic hand designed to replicate human mechanics. Built with servo actuators, mapping flex telemetry data from human gesture-control gloves to low-level microcontroller configs in real-time. Features noise-filtering routines to drop sensor jitter.
+                </p>
+                <div class="project-meta-grid">
+                  <div>
+                    <div class="meta-item-label">Telemetry input</div>
+                    <div class="meta-item-val">Flex/Biometric sensors & Analog triggers</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Servos</div>
+                    <div class="meta-item-val">Multi-axis micro servos</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Processing</div>
+                    <div class="meta-item-val">Signal noise filtering, low latency conversion</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Structure</div>
+                    <div class="meta-item-val">Custom 3D CAD design</div>
+                  </div>
+                </div>
+                <div class="project-links">
+                  <button class="btn btn-primary" onclick="alert('Triggering simulated robotic grip sequence...')">Perform Grip Cycle</button>
+                </div>
+              </div>
+              
+              <!-- Premium Image & Video Slider Capsule -->
+              <div class="project-slideshow-container" data-project-index="3">
+                <div class="slides-wrapper">
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ MECHANICAL CAD MODEL ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">3D CAD ASSEMBLY & BIOMETRIC JOINTS</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">Robotic Arm 3D Assembly CAD Model</div>
+                  </div>
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ SERVO RUNNING VIDEO ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">WATCH SERVOS CALIBRATION SEQUENCE</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">Glove Controller & Servo Replication Sequence</div>
+                  </div>
+                </div>
+                <button class="slide-nav-btn slide-nav-prev" aria-label="Previous Slide">&larr;</button>
+                <button class="slide-nav-btn slide-nav-next" aria-label="Next Slide">&rarr;</button>
+                <div class="slide-dots-indicator"></div>
+              </div>
+            </article>
+
+            <!-- Project 5: Home Automation -->
+            <article class="project-showcase" id="proj-home">
+              <div class="project-details">
+                <h3 class="project-title">Smart Home System</h3>
+                <span class="project-role">Distributed Local Network Automation</span>
+                <p class="project-desc">
+                  A distributed home automation system enabling voice-based command control and local toggles. Fuses ESP32 and ESP8266 devices running automation firmwares connected over local network relays, reading multi-sensor parameters for temperature, environment quality, and power consumption statistics.
+                </p>
+                <div class="project-meta-grid">
+                  <div>
+                    <div class="meta-item-label">Controller nodes</div>
+                    <div class="meta-item-val">ESP32 & ESP8266 local hubs</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Relays</div>
+                    <div class="meta-item-val">Multi-channel isolated modules</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Voice trigger</div>
+                    <div class="meta-item-val">Natural Language NLP mappings</div>
+                  </div>
+                  <div>
+                    <div class="meta-item-label">Integrations</div>
+                    <div class="meta-item-val">Local Web Dashboard, Real-time status</div>
+                  </div>
+                </div>
+                <div class="project-links">
+                  <button class="btn btn-primary" onclick="alert('Home Automation smart hub reset complete!')">Restart Smart Hub</button>
+                </div>
+              </div>
+              
+              <!-- Premium Image & Video Slider Capsule -->
+              <div class="project-slideshow-container" data-project-index="4">
+                <div class="slides-wrapper">
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ SMART DASHBOARD MOCKUP ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">LOCAL SYSTEM LIGHTS & HVAC GAUGES</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">Local Web Dashboard Relay Interface</div>
+                  </div>
+                  <div class="slide-item">
+                    <div class="slide-placeholder-media">
+                      <div style="position: absolute; text-align: center; z-index: 5;">
+                        <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">[ CONTROLLER PCB DESIGN ]</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em;">ESP8266 RELAY SHIELD PCB ROUTING</p>
+                      </div>
+                    </div>
+                    <div class="slide-caption">ESP8266 Integrated Relay Shield Routing Diagram</div>
+                  </div>
+                </div>
+                <button class="slide-nav-btn slide-nav-prev" aria-label="Previous Slide">&larr;</button>
+                <button class="slide-nav-btn slide-nav-next" aria-label="Next Slide">&rarr;</button>
+                <div class="slide-dots-indicator"></div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section (Futuristic AI Core) -->
+      <section id="skills" aria-label="Technical Skills">
+        <div class="container">
+          <div class="skills-wrapper">
+            <div class="skills-info">
+              <span class="section-tag">Cognitive Engine</span>
+              <h2 class="section-title">The Skills Core</h2>
+              <p class="skills-desc">
+                My technology stack rotates around an AI Core representing my domains of expertise. Hover or click on the core elements to visualize connections between firmware programming, full-stack modules, and generative AI orchestrations.
+              </p>
+              <div style="font-family: monospace; font-size: 0.8rem; color: var(--text-secondary); line-height: 2;">
+                <div>[01] SYSTEM LANGUAGES: Python, C++, C, JavaScript, HTML</div>
+                <div>[02] AI & ARCHITECTURE: Generative AI, LLM APIs, NLP Agentic Flows</div>
+                <div>[03] FIRMWARE: ESP32, ESP8266, Arduino, WLED, SignalRGB</div>
+                <div>[04] WEB FRAMEWORKS: React, Node.js, Electron, Firebase</div>
+              </div>
+            </div>
+            <div class="core-container">
+              <canvas id="core-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tech Stack: Interactive Motherboard -->
+      <section id="motherboard" aria-label="Interactive Motherboard Tech Stack">
+        <div class="container">
+          <div class="motherboard-wrapper">
+            <div class="motherboard-header">
+              <span class="section-tag">Hardware Mapping</span>
+              <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 0.5rem;">Interactive Motherboard</h2>
+              <p style="color: var(--text-secondary); font-size: 0.95rem;">Click on a silicon chip to read projects built using that technology.</p>
+            </div>
+            
+            <div class="motherboard-grid">
+              
+              <div class="motherboard-chip" data-tech="python">
+                <div class="chip-icon">PY</div>
+                <div class="chip-name">Python Chip</div>
+                <div class="chip-techs">AI, LLM APIs, OS Agents</div>
+              </div>
+
+              <div class="motherboard-chip" data-tech="cpp">
+                <div class="chip-icon">C++</div>
+                <div class="chip-name">C++ Processor</div>
+                <div class="chip-techs">Robotics, Firmwares, PID</div>
+              </div>
+
+              <div class="motherboard-chip" data-tech="esp">
+                <div class="chip-icon">ESP</div>
+                <div class="chip-name">ESP32 / ESP8266</div>
+                <div class="chip-techs">IoT, WLED, Smart Relays</div>
+              </div>
+
+              <div class="motherboard-chip" data-tech="web">
+                <div class="chip-icon">JS</div>
+                <div class="chip-name">Full-Stack Hub</div>
+                <div class="chip-techs">React, Node, Electron</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Motherboard Tech Project Overlay Modals -->
+      <div id="chip-modal-overlay" class="chip-modal">
+        <div class="chip-modal-content">
+          <button class="chip-modal-close" id="chip-modal-close-trigger" aria-label="Close Chip Details">&times;</button>
+          <h3 class="chip-modal-title" id="chip-title-placeholder">Tech Chip</h3>
+          <p class="chip-modal-subtitle" id="chip-subtitle-placeholder">Subsystem architecture</p>
+          <div class="chip-projects-list" id="chip-projects-box">
+            <!-- Project items populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Achievements Section -->
+      <section id="achievements" aria-label="Achievements and Certifications">
+        <div class="container">
+          <span class="section-tag">Milestone Validation</span>
+          <h2 class="section-title">Achievements & Credentials</h2>
+          <p style="color: var(--text-secondary); max-width: 600px; margin-bottom: 2rem;">Holographic badge credentials and validations. Click cards to expand validation descriptions.</p>
+          
+          <div class="achievements-grid">
+            
+            <div class="achievement-card" data-award="microsoft">
+              <div class="achievement-card-inner">
+                <div class="achievement-badge">&#9733;</div>
+                <div class="achievement-issuer">Microsoft</div>
+                <h3 class="achievement-title">Tech Competitions</h3>
+              </div>
+            </div>
+
+            <div class="achievement-card" data-award="linkedin">
+              <div class="achievement-card-inner">
+                <div class="achievement-badge">&#9670;</div>
+                <div class="achievement-issuer">LinkedIn</div>
+                <h3 class="achievement-title">Skill Assessment Validations</h3>
+              </div>
+            </div>
+
+            <div class="achievement-card" data-award="hackathon">
+              <div class="achievement-card-inner">
+                <div class="achievement-badge">&#9650;</div>
+                <div class="achievement-issuer">Hackathons</div>
+                <h3 class="achievement-title">IoT & AI Winner</h3>
+              </div>
+            </div>
+
+            <div class="achievement-card" data-award="workshops">
+              <div class="achievement-card-inner">
+                <div class="achievement-badge">&#9632;</div>
+                <div class="achievement-issuer">Workshops</div>
+                <h3 class="achievement-title">Robotics Mentor & Speaker</h3>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section (Terminal Design) -->
+      <section id="contact" aria-label="Contact Information">
+        <div class="container">
+          <span class="section-tag">Direct Feed</span>
+          <h2 class="section-title">Comm Terminal</h2>
+          
+          <div class="contact-wrapper">
+            <div class="terminal-panel">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <div class="terminal-dot-ctrl dot-red"></div>
+                  <div class="terminal-dot-ctrl dot-yellow"></div>
+                  <div class="terminal-dot-ctrl dot-green"></div>
+                </div>
+                <span class="terminal-title">SEND_MESSAGE.SH</span>
+              </div>
+              <form class="terminal-body" id="contact-terminal-form" onsubmit="event.preventDefault(); alert('Message broadcasted successfully over network!');">
+                <div class="terminal-input-group">
+                  <label class="terminal-label" for="terminal-name">Sender Identity</label>
+                  <input type="text" id="terminal-name" class="terminal-input" placeholder="e.g. Recruiter / Innovator" required />
+                </div>
+                <div class="terminal-input-group">
+                  <label class="terminal-label" for="terminal-email">Sender Comm Gateway</label>
+                  <input type="email" id="terminal-email" class="terminal-input" placeholder="email@address.com" required />
+                </div>
+                <div class="terminal-input-group">
+                  <label class="terminal-label" for="terminal-msg">Secure Data Broadcast</label>
+                  <textarea id="terminal-msg" class="terminal-input" placeholder="Enter transmission packet..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Send Broadcast</button>
+              </form>
+            </div>
+            
+            <div class="contact-meta">
+              <div class="contact-info-block">
+                <span class="contact-label">Secure Comm Node</span>
+                <a href="mailto:abhaykushwaha2549@gmail.com" class="contact-value">abhaykushwaha2549@gmail.com</a>
+              </div>
+              <div class="contact-info-block">
+                <span class="contact-label">Location Coordinate</span>
+                <span class="contact-value">Chandigarh, India</span>
+              </div>
+              <div class="contact-info-block">
+                <span class="contact-label">Virtual Link (LinkedIn)</span>
+                <a href="https://linkedin.com/in/abhay-kushwaha-8451a7367" target="_blank" rel="noopener noreferrer" class="contact-value">linkedin.com/in/abhay-kushwaha</a>
+              </div>
+              <div class="contact-info-block">
+                <span class="contact-label">Repository Registry (GitHub)</span>
+                <a href="https://github.com/abhaykushwaha2549-ops" target="_blank" rel="noopener noreferrer" class="contact-value">github.com/abhaykushwaha2549-ops</a>
+              </div>
+              <div class="contact-info-block">
+                <span class="contact-label">Curriculum Vitae</span>
+                <button class="btn btn-secondary" onclick="alert('Downloading CV Bundle: abhay_kushwaha_resume.pdf')">Download Resume</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer style="padding: 4rem 0; border-top: 1px solid var(--border-light); text-align: center;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <p style="font-family: monospace; font-size: 0.75rem; color: var(--text-tertiary);">
+            &copy; 2026 ABHAY KUSHWAHA. ALL CHANNELS SECURED.
+          </p>
+          <p style="font-family: monospace; font-size: 0.7rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 0.1em;">
+            Handcrafted with premium CSS, HTML5 Canvas & GSAP. No templates.
+          </p>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- Admin Control Center Fullscreen Modal -->
+    <div id="admin-panel-overlay">
+      <div class="admin-modal">
+        <button class="admin-modal-close" id="admin-close-btn" aria-label="Close Admin Panel">&times;</button>
+        
+        <!-- Auth Screen -->
+        <div id="admin-auth-view">
+          <h2 class="admin-title">🔒 Lab Access Verification</h2>
+          <div class="admin-form-group">
+            <label class="admin-label" for="admin-passcode">Enter Security Passcode</label>
+            <input type="password" id="admin-passcode" class="admin-input" placeholder="Type passcode..." />
+          </div>
+          <button class="btn btn-primary" id="admin-auth-submit">Unlock Terminal</button>
+        </div>
+
+        <!-- Dashboard Edit Screen -->
+        <div id="admin-dashboard-view" style="display: none;">
+          <!-- Tabs Navigation -->
+          <div style="display: flex; gap: 0.8rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem;">
+            <button class="btn btn-secondary" id="admin-tab-cms" style="padding: 0.5rem 1.2rem; font-size: 0.75rem; border-radius: 99px;">Project CMS</button>
+            <button class="btn btn-secondary" id="admin-tab-ai" style="padding: 0.5rem 1.2rem; font-size: 0.75rem; border-radius: 99px;">AI Bot Config</button>
+          </div>
+
+          <!-- Tab 1: CMS Control Panel -->
+          <div id="admin-panel-cms-content">
+            <h3 style="font-family: var(--font-sans); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">⚙️ Lab CMS Control</h3>
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-project-select">Select Lab Room (Project)</label>
+              <select id="admin-project-select" class="admin-select">
+                <option value="proj-lightinmotion">Room 1: LightInMotion</option>
+                <option value="proj-scrimsnation">Room 2: Scrims Nation</option>
+                <option value="proj-drone">Room 3: AI Surveillance Drone</option>
+                <option value="proj-robothand">Room 4: Kinetic Robotic Hand</option>
+                <option value="proj-home">Room 5: Smart Home System</option>
+              </select>
+            </div>
+            
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-title">Project Name</label>
+              <input type="text" id="admin-proj-title" class="admin-input" />
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-role">Project Role/Sub-heading</label>
+              <input type="text" id="admin-proj-role" class="admin-input" />
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-desc">Project Description</label>
+              <textarea id="admin-proj-desc" class="admin-input" style="min-height: 80px; resize: vertical;"></textarea>
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-web">Website / Store Link</label>
+              <input type="text" id="admin-proj-web" class="admin-input" />
+            </div>
+
+            <!-- Drag and drop image upload simulation -->
+            <div class="admin-form-group">
+              <label class="admin-label">Upload Presentation Slides (Photos / Videos)</label>
+              <div class="admin-drag-area" id="admin-drag-drop-zone">
+                <span class="admin-drag-title">Drag & Drop Media Here</span>
+                <span class="admin-drag-subtitle">Supports JPEG, PNG, MP4 files</span>
+                <input type="file" id="admin-file-picker" style="display: none;" accept="image/*,video/*" multiple />
+              </div>
+              <div class="admin-media-preview-grid" id="admin-preview-grid-box">
+                <!-- Upload previews populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: AI Assistant Config Panel -->
+          <div id="admin-panel-ai-content" style="display: none;">
+            <h3 style="font-family: var(--font-sans); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">🤖 Custom AI Assistant Configurations</h3>
+            
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-key-gemini">Google Gemini API Key</label>
+              <input type="password" id="admin-key-gemini" class="admin-input" placeholder="Enter Gemini API key..." />
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-ai-persona">AI Assistant Persona & System Instructions</label>
+              <textarea id="admin-ai-persona" class="admin-input" style="min-height: 120px; resize: vertical;" placeholder="You are Abhay, study Computer Science, build robotics... speak like me."></textarea>
+            </div>
+
+            <!-- Option A: Free Cloned Voice Audio Clips -->
+            <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+              <h4 style="font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--text-secondary);">🎙️ Option A: Free Cloned Voice Clips (Upload pre-recorded audios)</h4>
+              
+              <!-- Intro welcome audio upload -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">Welcome Greeting Intro (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-audio-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-audio-filename" style="font-size: 0.75rem;">Drag & Drop Welcome Audio</span>
+                  <input type="file" id="admin-audio-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- About Me Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">About Me / Biography Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-about-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-about-filename" style="font-size: 0.75rem;">Select Biography Audio</span>
+                  <input type="file" id="admin-about-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- LightInMotion Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">LightInMotion Showcase Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-lim-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-lim-filename" style="font-size: 0.75rem;">Select LightInMotion Audio</span>
+                  <input type="file" id="admin-lim-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- Robotic Hand Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">Robotic Hand Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-hand-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-hand-filename" style="font-size: 0.75rem;">Select Robotic Hand Audio</span>
+                  <input type="file" id="admin-hand-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- Scrims Nation Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">Scrims Nation Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-scrims-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-scrims-filename" style="font-size: 0.75rem;">Select Scrims Nation Audio</span>
+                  <input type="file" id="admin-scrims-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- AI Drone Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">AI Drone Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-drone-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-drone-filename" style="font-size: 0.75rem;">Select AI Drone Audio</span>
+                  <input type="file" id="admin-drone-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Voice Engine Selection -->
+            <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+              <h4 style="font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--text-secondary);">🎙️ Dynamic Voice Synthesis Engine</h4>
+              
+              <div class="admin-form-group" style="margin-bottom: 1.5rem;">
+                <label class="admin-label" for="admin-voice-engine-select">Active Speech Engine</label>
+                <select id="admin-voice-engine-select" class="admin-select">
+                  <option value="browser">Browser Native Speech (Free/No Setup)</option>
+                  <option value="elevenlabs">ElevenLabs Cloud TTS (Dynamic Voice Clone)</option>
+                  <option value="local-xtts">Local XTTS Python Server (100% Free Voice Clone)</option>
+                </select>
+              </div>
+
+              <!-- Option B: ElevenLabs Live TTS -->
+              <div id="admin-config-elevenlabs" style="display: none; margin-bottom: 1.5rem;">
+                <div class="admin-form-group">
+                  <label class="admin-label" for="admin-key-eleven">ElevenLabs API Key</label>
+                  <input type="password" id="admin-key-eleven" class="admin-input" placeholder="Enter ElevenLabs API key..." />
+                </div>
+                <div class="admin-form-group" style="margin-top: 1rem;">
+                  <label class="admin-label" for="admin-voice-eleven">ElevenLabs Voice ID</label>
+                  <input type="text" id="admin-voice-eleven" class="admin-input" placeholder="Enter Voice ID hash..." />
+                </div>
+              </div>
+
+              <!-- Option C: Local XTTS Server (Free) -->
+              <div id="admin-config-local-xtts" style="display: none;">
+                <div class="admin-form-group">
+                  <label class="admin-label" for="admin-local-tts-url">Local XTTS Server URL</label>
+                  <input type="text" id="admin-local-tts-url" class="admin-input" value="http://localhost:5000/tts" placeholder="http://localhost:5000/tts" />
+                  <span style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: 0.3rem;">Run the provided 'tts_server.py' script locally to clone your voice for free.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="margin-top: 2rem; display: flex; gap: 1rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+            <button class="btn btn-primary" id="admin-save-btn">Save Changes</button>
+            <button class="btn btn-secondary" id="admin-logout-btn">Lock Terminal</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
