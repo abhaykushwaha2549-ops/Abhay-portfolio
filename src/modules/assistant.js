@@ -166,7 +166,7 @@ export function initAIAssistant() {
 
   // --- Dynamic text replies from Gemini (Local/Test mode) ---
   async function generateGeminiResponse(query, apiKey, instructions) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
     
     try {
       const response = await fetch(url, {
