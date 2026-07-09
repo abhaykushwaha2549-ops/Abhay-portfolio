@@ -10,6 +10,7 @@ export function initAIAssistant() {
   if (!toggle || !chat || !close || !messagesBox || !inputField || !sendTrigger) return;
 
   let activeAudio = null;
+  let fallbackVoice = null;
 
   // Local fallback response database
   const fallbackDb = {
@@ -19,6 +20,26 @@ export function initAIAssistant() {
     robotic: "The Kinetic Robotic Hand is an anthropomorphic multi-DOF robotic hand programmed with C++ on Arduino. It captures glove flex telemetry and controls multi-axis servos, utilizing noise-filtering algorithms to achieve smooth replication of human joint mechanics.",
     drone: "The AI Surveillance Drone features C++ firmware running on an ESP32 microchip. It integrates MPU6050 and BMP280 telemetry, adjusting motor power via PID flight stabilization loops."
   };
+
+  // Pre-load stable browser voice fallback (prevent cycling voices)
+  function loadFallbackVoice() {
+    if ('speechSynthesis' in window) {
+      const voices = window.speechSynthesis.getVoices();
+      let voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google'));
+      if (!voice) {
+        voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('microsoft'));
+      }
+      if (!voice) {
+        voice = voices.find(v => v.lang.startsWith('en'));
+      }
+      fallbackVoice = voice;
+    }
+  }
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = loadFallbackVoice;
+    loadFallbackVoice();
+  }
 
   // Toggle chat widget
   toggle.addEventListener('click', () => {
@@ -84,7 +105,7 @@ export function initAIAssistant() {
       return;
     }
 
-    // Otherwise, try Live APIs
+    // Otherwise, fall back to Live APIs (Gemini) with Dynamic voice synthesis engines
     const geminiKey = localStorage.getItem('gemini_api_key');
     const systemInstructions = localStorage.getItem('gemini_system_instructions') || '';
 
@@ -112,7 +133,18 @@ export function initAIAssistant() {
     if (q.includes('drone') || q.includes('flight') || q.includes('surveillance')) {
       return { audioKey: 'voice_audio_drone', replyText: fallbackDb.drone };
     }
-    if (q.includes('who are you') || q.includes('about abhay') || q.includes('biography') || q.includes('resume') || q.includes('skills')) {
+    if (
+      q.includes('who are you') || 
+      q.includes('about abhay') || 
+      q.includes('biography') || 
+      q.includes('resume') || 
+      q.includes('skills') || 
+      q.includes('introduction') || 
+      q.includes('intro') || 
+      q.includes('abhay') || 
+      q.includes('who is') || 
+      q.includes('profile')
+    ) {
       return { audioKey: 'voice_audio_about', replyText: fallbackDb.about };
     }
     return null;
@@ -252,10 +284,11 @@ export function initAIAssistant() {
 
   function browserSpeechFallback(text) {
     if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      const voices = window.speechSynthesis.getVoices();
-      const enVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google'));
-      if (enVoice) utterance.voice = enVoice;
+      if (fallbackVoice) {
+        utterance.voice = fallbackVoice;
+      }
       window.speechSynthesis.speak(utterance);
     }
   }
@@ -272,12 +305,24 @@ export function initAIAssistant() {
 
   function getLocalResponse(query) {
     const q = query.toLowerCase();
-    if (q.includes('lightinmotion')) return fallbackDb.lightinmotion;
-    if (q.includes('scrims') || q.includes('nation')) return fallbackDb.scrims;
+    if (q.includes('lightinmotion') || q.includes('light in motion') || q.includes('lighting')) return fallbackDb.lightinmotion;
+    if (q.includes('scrims') || q.includes('nation') || q.includes('esports')) return fallbackDb.scrims;
     if (q.includes('tech') || q.includes('skill') || q.includes('languages')) return fallbackDb.tech;
     if (q.includes('working') || q.includes('now') || q.includes('current')) return fallbackDb.projects;
-    if (q.includes('hand') || q.includes('robotic')) return fallbackDb.robotic;
-    if (q.includes('drone') || q.includes('flight')) return fallbackDb.drone;
+    if (q.includes('hand') || q.includes('robotic') || q.includes('gesture')) return fallbackDb.robotic;
+    if (q.includes('drone') || q.includes('flight') || q.includes('surveillance')) return fallbackDb.drone;
+    if (
+      q.includes('who are you') || 
+      q.includes('about abhay') || 
+      q.includes('biography') || 
+      q.includes('resume') || 
+      q.includes('skills') || 
+      q.includes('introduction') || 
+      q.includes('intro') || 
+      q.includes('abhay') || 
+      q.includes('who is') || 
+      q.includes('profile')
+    ) return fallbackDb.about;
     
     return "Query analyzed. I have details on Abhay's startups (Scrims Nation), hardware (LightInMotion, Robotic Hand, AI Drone), and skills core. What details do you need?";
   }
@@ -287,7 +332,11 @@ export function initAIAssistant() {
     msg.className = `chat-msg ${type}`;
     msg.textContent = text;
     messagesBox.appendChild(msg);
-    messagesBox.scrollTop = messagesBox.scrollHeight;
+    
+    // Defer scrolling slightly so the height has fully rendered in the DOM
+    setTimeout(() => {
+      messagesBox.scrollTop = messagesBox.scrollHeight;
+    }, 50);
   }
 
   function removeTempMsg() {
