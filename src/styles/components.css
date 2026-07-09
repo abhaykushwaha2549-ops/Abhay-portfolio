@@ -1414,6 +1414,33 @@ a.contact-value:hover {
   100% { transform: scale(1.4); opacity: 0; }
 }
 
+#ai-assistant-tooltip {
+  position: fixed;
+  bottom: 0.8rem;
+  right: 2rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 999;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(5px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#ai-assistant-tooltip.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 #ai-assistant-chat {
   position: fixed;
   bottom: 6.5rem;
@@ -1470,6 +1497,7 @@ a.contact-value:hover {
 
 .chat-messages {
   flex: 1;
+  max-height: 290px; /* Safety height constraint to guarantee scrollbar triggers */
   padding: 1.5rem;
   overflow-y: auto;
   display: flex;
