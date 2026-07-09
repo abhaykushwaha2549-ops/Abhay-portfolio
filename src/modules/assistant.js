@@ -21,11 +21,16 @@ export function initAIAssistant() {
     drone: "The AI Surveillance Drone features C++ firmware running on an ESP32 microchip. It integrates MPU6050 and BMP280 telemetry, adjusting motor power via PID flight stabilization loops."
   };
 
-  // Pre-load stable browser voice fallback (prevent cycling voices)
+  // Pre-load stable browser voice fallback (prioritizes male voices to sound closer to Abhay)
   function loadFallbackVoice() {
     if ('speechSynthesis' in window) {
       const voices = window.speechSynthesis.getVoices();
-      let voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google'));
+      
+      // Try to find a male voice first (like Microsoft David or Google Male)
+      let voice = voices.find(v => v.lang.startsWith('en') && (v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('male')));
+      if (!voice) {
+        voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google'));
+      }
       if (!voice) {
         voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('microsoft'));
       }
@@ -143,7 +148,16 @@ export function initAIAssistant() {
       q.includes('intro') || 
       q.includes('abhay') || 
       q.includes('who is') || 
-      q.includes('profile')
+      q.includes('profile') ||
+      q.includes('education') ||
+      q.includes('history') ||
+      q.includes('college') ||
+      q.includes('degree') ||
+      q.includes('university') ||
+      q.includes('academic') ||
+      q.includes('study') ||
+      q.includes('studies') ||
+      q.includes('graduation')
     ) {
       return { audioKey: 'voice_audio_about', replyText: fallbackDb.about };
     }
@@ -282,6 +296,25 @@ export function initAIAssistant() {
     }
   }
 
+  // Tooltip popup trigger when scrolled to the Robotic Hand section
+  const tooltip = document.getElementById('ai-assistant-tooltip');
+  const targetSection = document.getElementById('proj-robothand');
+  
+  if (tooltip && targetSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Only show tooltip if chat window is not already open
+        if (entry.isIntersecting && !chat.classList.contains('active')) {
+          tooltip.classList.add('active');
+        } else {
+          tooltip.classList.remove('active');
+        }
+      });
+    }, { threshold: 0.15 });
+    
+    observer.observe(targetSection);
+  }
+
   function browserSpeechFallback(text) {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -321,7 +354,16 @@ export function initAIAssistant() {
       q.includes('intro') || 
       q.includes('abhay') || 
       q.includes('who is') || 
-      q.includes('profile')
+      q.includes('profile') ||
+      q.includes('education') ||
+      q.includes('history') ||
+      q.includes('college') ||
+      q.includes('degree') ||
+      q.includes('university') ||
+      q.includes('academic') ||
+      q.includes('study') ||
+      q.includes('studies') ||
+      q.includes('graduation')
     ) return fallbackDb.about;
     
     return "Query analyzed. I have details on Abhay's startups (Scrims Nation), hardware (LightInMotion, Robotic Hand, AI Drone), and skills core. What details do you need?";
