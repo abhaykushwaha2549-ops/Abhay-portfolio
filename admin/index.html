@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abhay Kushwaha | Lab Admin Terminal</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Global CSS links -->
+    <link rel="stylesheet" href="../src/styles/theme.css" />
+    <link rel="stylesheet" href="../src/styles/main.css" />
+    <link rel="stylesheet" href="../src/styles/components.css" />
+    <style>
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+      }
+      .admin-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+      }
+      .admin-page-card {
+        background: rgba(10, 10, 10, 0.7);
+        border: 1px solid var(--border-light);
+        backdrop-filter: blur(16px);
+        border-radius: 12px;
+        padding: 3rem;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      }
+      .admin-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .admin-logo {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        letter-spacing: 0.2em;
+        color: var(--text-primary);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        margin-bottom: 0.5rem;
+      }
+      .admin-subtitle {
+        font-family: monospace;
+        font-size: 0.75rem;
+        color: var(--accent-purple);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+      }
+      .back-to-site {
+        display: inline-block;
+        margin-top: 1.5rem;
+        font-family: monospace;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .back-to-site:hover {
+        color: var(--text-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-container">
+      <div class="admin-page-card">
+        
+        <div class="admin-header">
+          <div class="admin-logo">ABHAY.LAB</div>
+          <div class="admin-subtitle">// SECURITY_ACCESS_CONTROL</div>
+        </div>
+
+        <!-- Auth Screen -->
+        <div id="admin-auth-view">
+          <h2 class="admin-title" style="margin-bottom: 2rem;">🔒 Lab Access Verification</h2>
+          <div class="admin-form-group">
+            <label class="admin-label" for="admin-passcode">Enter Security Passcode</label>
+            <input type="password" id="admin-passcode" class="admin-input" placeholder="Type passcode..." />
+          </div>
+          <button class="btn btn-primary" id="admin-auth-submit" style="width: 100%; margin-top: 1rem;">Unlock Terminal</button>
+          
+          <center>
+            <a href="/" class="back-to-site">← Return to Laboratory Entrance</a>
+          </center>
+        </div>
+
+        <!-- Dashboard Edit Screen -->
+        <div id="admin-dashboard-view" style="display: none;">
+          <!-- Tabs Navigation -->
+          <div style="display: flex; gap: 0.8rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem;">
+            <button class="btn btn-secondary" id="admin-tab-cms" style="padding: 0.5rem 1.2rem; font-size: 0.75rem; border-radius: 99px;">Project CMS</button>
+            <button class="btn btn-secondary" id="admin-tab-ai" style="padding: 0.5rem 1.2rem; font-size: 0.75rem; border-radius: 99px;">AI Bot Config</button>
+          </div>
+
+          <!-- Tab 1: CMS Control Panel -->
+          <div id="admin-panel-cms-content">
+            <h3 style="font-family: var(--font-sans); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">⚙️ Lab CMS Control</h3>
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-project-select">Select Lab Room (Project)</label>
+              <select id="admin-project-select" class="admin-select">
+                <option value="proj-lightinmotion">Room 1: LightInMotion</option>
+                <option value="proj-scrimsnation">Room 2: Scrims Nation</option>
+                <option value="proj-drone">Room 3: AI Surveillance Drone</option>
+                <option value="proj-robothand">Room 4: Kinetic Robotic Hand</option>
+                <option value="proj-home">Room 5: Smart Home System</option>
+              </select>
+            </div>
+            
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-title">Project Name</label>
+              <input type="text" id="admin-proj-title" class="admin-input" />
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-role">Project Role/Sub-heading</label>
+              <input type="text" id="admin-proj-role" class="admin-input" />
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-desc">Project Description</label>
+              <textarea id="admin-proj-desc" class="admin-input" style="min-height: 80px; resize: vertical;"></textarea>
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-proj-web">Website / Store Link</label>
+              <input type="text" id="admin-proj-web" class="admin-input" />
+            </div>
+
+            <!-- Drag and drop image upload simulation -->
+            <div class="admin-form-group">
+              <label class="admin-label">Upload Presentation Slides (Photos / Videos)</label>
+              <div class="admin-drag-area" id="admin-drag-drop-zone">
+                <span class="admin-drag-title">Drag & Drop Media Here</span>
+                <span class="admin-drag-subtitle">Supports JPEG, PNG, MP4 files</span>
+                <input type="file" id="admin-file-picker" style="display: none;" accept="image/*,video/*" multiple />
+              </div>
+              <div class="admin-media-preview-grid" id="admin-preview-grid-box">
+                <!-- Upload previews populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: AI Assistant Config Panel -->
+          <div id="admin-panel-ai-content" style="display: none;">
+            <h3 style="font-family: var(--font-sans); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">🤖 Custom AI Assistant Configurations</h3>
+            
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-key-gemini">Google Gemini API Key</label>
+              <input type="password" id="admin-key-gemini" class="admin-input" placeholder="Enter Gemini API key..." />
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-label" for="admin-ai-persona">AI Assistant Persona & System Instructions</label>
+              <textarea id="admin-ai-persona" class="admin-input" style="min-height: 120px; resize: vertical;" placeholder="You are Abhay, study Computer Science, build robotics... speak like me."></textarea>
+            </div>
+
+            <!-- Option A: Free Cloned Voice Audio Clips -->
+            <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+              <h4 style="font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--text-secondary);">🎙️ Option A: Free Cloned Voice Clips (Upload pre-recorded audios)</h4>
+              
+              <!-- Intro welcome audio upload -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">Welcome Greeting Intro (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-audio-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-audio-filename" style="font-size: 0.75rem;">Drag & Drop Welcome Audio</span>
+                  <input type="file" id="admin-audio-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- About Me Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">About Me / Biography Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-about-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-about-filename" style="font-size: 0.75rem;">Select Biography Audio</span>
+                  <input type="file" id="admin-about-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- LightInMotion Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">LightInMotion Showcase Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-lim-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-lim-filename" style="font-size: 0.75rem;">Select LightInMotion Audio</span>
+                  <input type="file" id="admin-lim-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- Robotic Hand Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">Robotic Hand Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-hand-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-hand-filename" style="font-size: 0.75rem;">Select Robotic Hand Audio</span>
+                  <input type="file" id="admin-hand-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- Scrims Nation Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">Scrims Nation Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-scrims-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-scrims-filename" style="font-size: 0.75rem;">Select Scrims Nation Audio</span>
+                  <input type="file" id="admin-scrims-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+
+              <!-- AI Drone Audio -->
+              <div class="admin-form-group" style="margin-bottom: 1rem;">
+                <label class="admin-label">AI Drone Audio (.MP3/.WAV)</label>
+                <div class="admin-drag-area" id="admin-drag-drone-zone" style="padding: 1rem;">
+                  <span class="admin-drag-title" id="admin-drone-filename" style="font-size: 0.75rem;">Select AI Drone Audio</span>
+                  <input type="file" id="admin-drone-picker" style="display: none;" accept="audio/*" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Voice Engine Selection -->
+            <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+              <h4 style="font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--text-secondary);">🎙️ Dynamic Voice Synthesis Engine</h4>
+              
+              <div class="admin-form-group" style="margin-bottom: 1.5rem;">
+                <label class="admin-label" for="admin-voice-engine-select">Active Speech Engine</label>
+                <select id="admin-voice-engine-select" class="admin-select">
+                  <option value="browser">Browser Native Speech (Free/No Setup)</option>
+                  <option value="elevenlabs">ElevenLabs Cloud TTS (Dynamic Voice Clone)</option>
+                  <option value="local-xtts">Local XTTS Python Server (100% Free Voice Clone)</option>
+                </select>
+              </div>
+
+              <!-- Option B: ElevenLabs Live TTS -->
+              <div id="admin-config-elevenlabs" style="display: none; margin-bottom: 1.5rem;">
+                <div class="admin-form-group">
+                  <label class="admin-label" for="admin-key-eleven">ElevenLabs API Key</label>
+                  <input type="password" id="admin-key-eleven" class="admin-input" placeholder="Enter ElevenLabs API key..." />
+                </div>
+                <div class="admin-form-group" style="margin-top: 1rem;">
+                  <label class="admin-label" for="admin-voice-eleven">ElevenLabs Voice ID</label>
+                  <input type="text" id="admin-voice-eleven" class="admin-input" placeholder="Enter Voice ID hash..." />
+                </div>
+              </div>
+
+              <!-- Option C: Local XTTS Server (Free) -->
+              <div id="admin-config-local-xtts" style="display: none;">
+                <div class="admin-form-group">
+                  <label class="admin-label" for="admin-local-tts-url">Local XTTS Server URL</label>
+                  <input type="text" id="admin-local-tts-url" class="admin-input" value="http://localhost:5000/tts" placeholder="http://localhost:5000/tts" />
+                  <span style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: 0.3rem;">Run the provided 'tts_server.py' script locally to clone your voice for free.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="margin-top: 2rem; display: flex; gap: 1rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+            <button class="btn btn-primary" id="admin-save-btn" style="flex: 1;">Save Changes</button>
+            <button class="btn btn-secondary" id="admin-logout-btn">Lock Terminal</button>
+          </div>
+          
+          <center>
+            <a href="/" class="back-to-site">← Return to Laboratory Entrance</a>
+          </center>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Script loading the admin console backend -->
+    <script type="module" src="./admin-main.js"></script>
+  </body>
+</html>
