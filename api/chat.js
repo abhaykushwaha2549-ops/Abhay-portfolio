@@ -54,7 +54,8 @@ export default async function handler(req, res) {
       return res.status(200).json({ reply: data.candidates[0].content.parts[0].text.trim() });
     } else {
       console.error('Invalid Gemini response:', data);
-      return res.status(502).json({ error: 'Invalid response from Gemini engine.' });
+      const errMsg = data.error ? data.error.message : 'Invalid response from Gemini engine.';
+      return res.status(502).json({ error: errMsg });
     }
   } catch (error) {
     console.error('Proxy Error:', error);
