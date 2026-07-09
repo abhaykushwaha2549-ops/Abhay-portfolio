@@ -35,22 +35,50 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-    
     const fullText = `${instructions}\n\nUser: ${text}`;
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: fullText }] }]
-      })
-    });
-
-    const data = await response.json();
     
+    const queryModel = async (modelName) => {
+      const url = `https://generativelanguage.googleapis.com/v1/models/${modelName}:generateContent?key=${apiKey}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: fullText }] }]
+        })
+      });
+      return res;
+    };
+
+    let response = await queryModel('gemini-1.5-flash');
+    let data = await response.json();
+
+    // Self-healing: if model is not found, dynamically list available models and try the best match
+    if (data.error && (data.error.message.includes('not found') || data.error.message.includes('not supported'))) {
+      console.log('Model gemini-1.5-flash not found or supported, querying available list...');
+      try {
+        const listUrl = `https://generativelanguage.googleapis.com/v1/models?key=${apiKey}`;
+        const listRes = await fetch(listUrl);
+        const listData = await listRes.json();
+        
+        if (listData.models && listData.models.length > 0) {
+          const candidate = listData.models.find(m => 
+            m.name.includes('gemini') && 
+            m.supportedGenerationMethods && 
+            m.supportedGenerationMethods.includes('generateContent')
+          );
+          
+          if (candidate) {
+            const cleanModelName = candidate.name.replace('models/', '');
+            console.log(`Discovered active model on this project: ${cleanModelName}, retrying...`);
+            response = await queryModel(cleanModelName);
+            data = await response.json();
+          }
+        }
+      } catch (err) {
+        console.error('Self-healing model listing failed:', err);
+      }
+    }
+
     if (data.candidates && data.candidates[0].content.parts[0].text) {
       return res.status(200).json({ reply: data.candidates[0].content.parts[0].text.trim() });
     } else {
