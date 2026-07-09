@@ -51,8 +51,12 @@
     <!-- Floating AI Assistant Widget -->
     <button id="ai-assistant-toggle" aria-label="Open AI Assistant">
       <span class="ai-pulse"></span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12a10 10 0 0 1 10-10z"></path><path d="M12 8v8"></path><path d="M8 12h8"></path></svg>
+      <!-- Speech bubble SVG chat icon -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
     </button>
+    <div id="ai-assistant-tooltip" role="tooltip">Chat with Abhay</div>
     
     <div id="ai-assistant-chat" aria-live="polite">
       <div class="chat-header">
