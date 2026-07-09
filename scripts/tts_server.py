@@ -84,4 +84,6 @@ if __name__ == "__main__":
         print("Otherwise synthesis requests will return an error.")
         
     init_tts()
-    app.run(host="localhost", port=5000, debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    # Listen on 0.0.0.0 to receive incoming queries in cloud deployments
+    app.run(host="0.0.0.0", port=port, debug=False)
