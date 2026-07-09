@@ -168,6 +168,8 @@ export function initAIAssistant() {
   async function generateGeminiResponse(query, apiKey, instructions) {
     const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
     
+    const fullText = `${instructions}\n\nUser: ${query}`;
+    
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -175,8 +177,7 @@ export function initAIAssistant() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: query }] }],
-          systemInstruction: { parts: [{ text: instructions }] }
+          contents: [{ role: 'user', parts: [{ text: fullText }] }]
         })
       });
 
