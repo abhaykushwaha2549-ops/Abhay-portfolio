@@ -292,6 +292,7 @@ export function initAIAssistant() {
       const voiceId = localStorage.getItem('elevenlabs_voice_id');
 
       if (elevenKey && voiceId) {
+        // Local Key Present (Testing Mode)
         const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
         try {
           const response = await fetch(url, {
@@ -317,11 +318,33 @@ export function initAIAssistant() {
           activeAudio = new Audio(audioUrl);
           activeAudio.play();
         } catch (err) {
-          console.error('ElevenLabs synthesis failed:', err.message);
+          console.error('ElevenLabs local key synthesis failed:', err.message);
           browserSpeechFallback(text);
         }
       } else {
-        browserSpeechFallback(text);
+        // Production Mode: call secure Vercel serverless proxy
+        try {
+          const response = await fetch('/api/tts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: text })
+          });
+
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error || 'Serverless TTS proxy returned error');
+          }
+
+          const blob = await response.blob();
+          const audioUrl = URL.createObjectURL(blob);
+          activeAudio = new Audio(audioUrl);
+          activeAudio.play();
+        } catch (err) {
+          console.error('ElevenLabs secure serverless proxy failed:', err.message);
+          browserSpeechFallback(text);
+        }
       }
     } else {
       // Browser native TTS fallback
