@@ -302,19 +302,22 @@ export function initAIAssistant() {
             },
             body: JSON.stringify({
               text: text,
-              model_id: 'eleven_monolingual_v1',
+              model_id: 'eleven_multilingual_v2',
               voice_settings: { stability: 0.5, similarity_boost: 0.75 }
             })
           });
 
-          if (!response.ok) throw new Error('ElevenLabs Cloud synthesis returned error status');
+          if (!response.ok) {
+            const errorDetails = await response.json().catch(() => ({}));
+            throw new Error(JSON.stringify(errorDetails) || 'ElevenLabs returned error status');
+          }
 
           const blob = await response.blob();
           const audioUrl = URL.createObjectURL(blob);
           activeAudio = new Audio(audioUrl);
           activeAudio.play();
         } catch (err) {
-          console.error('ElevenLabs synthesis failed:', err);
+          console.error('ElevenLabs synthesis failed:', err.message);
           browserSpeechFallback(text);
         }
       } else {
