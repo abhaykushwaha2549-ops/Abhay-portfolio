@@ -408,9 +408,9 @@ export function initAIAssistant() {
     msg.textContent = text;
     messagesBox.appendChild(msg);
     
-    // Defer scrolling slightly so the height has fully rendered in the DOM
+    // Smoothly scroll the new bubble into view
     setTimeout(() => {
-      messagesBox.scrollTop = messagesBox.scrollHeight;
+      msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 50);
   }
 
